@@ -1,633 +1,923 @@
+``html
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BauruHelpDesk - Consultoria em TI e Segurança Cibernética</title>
+    <meta name="description" content="Bauru Help Desk - Suporte em TI, Gestão de Redes e Segurança Cibernética Kaspersky Partner Group.">
+    <title>Bauru Help Desk | Kaspersky Partner Group</title>
     
-    <!-- Favicon e Logo (ícone do navegador) -->
-    <link rel="icon" type="image/svg+xml" href="https://api.iconify.design/material-symbols/security.svg?color=%232563eb">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-        * {
-            font-family: 'Inter', sans-serif;
-        }
-        
-        .cyber-glow {
-            box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
-        }
-        
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
+        :root {
+            --kaspersky-green: #00A88E;
+            --kaspersky-dark: #1d1d1d;
+            --bauru-blue: #0d6efd;
+            --dark-bg: #0b0f19;
+            --card-bg: #151a27;
+            --text-light: #f0f0f0;
         }
 
-        /* Carousel Styles */
-        .carousel-slide {
-            display: none;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            overflow-x: hidden;
         }
 
-        .carousel-slide.active {
-            display: block;
-            opacity: 1;
-        }
-        
-        /* High contrast mode support */
-        @media (prefers-contrast: high) {
-            .bg-blue-600 {
-                background: #000;
-                color: #fff;
-            }
-        }
-        
-        /* Reduced motion support */
-        @media (prefers-reduced-motion: reduce) {
-            .fade-in, .carousel-slide {
-                transition: none;
-            }
-        }
-        
-        /* Focus indicators for accessibility */
-        .focus-visible:focus {
-            outline: 3px solid #fbbf24;
-            outline-offset: 2px;
+        h1, h2, h3, h4, h5, .navbar-brand, .modal-title {
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        /* WhatsApp Floating Icon */
-        .whatsapp-float {
-            position: fixed;
-            width: 60px;
-            height: 60px;
-            bottom: 40px;
-            right: 40px;
-            background-color: #25d366;
-            color: #FFF;
-            border-radius: 50px;
+        /* --- Navbar --- */
+        .navbar {
+            background-color: rgba(11, 15, 25, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #333;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: white !important;
+        }
+
+        .navbar-brand span { color: var(--kaspersky-green); }
+
+        .partner-badge {
+            background: var(--kaspersky-green);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-left: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 0 10px rgba(0, 168, 142, 0.3);
+        }
+
+        .nav-link {
+            color: #ccc !important;
+            transition: 0.3s;
+            font-size: 1rem;
+            margin-left: 15px;
+        }
+
+        .nav-link:hover { color: var(--kaspersky-green) !important; }
+
+        /* --- Carousel --- */
+        .carousel-item {
+            height: 85vh;
+            min-height: 600px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .overlay {
+            background: linear-gradient(90deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 100%);
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; align-items: center;
+        }
+
+        .carousel-caption {
+            text-align: left;
+            left: 10%; right: 10%; bottom: auto; top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .btn-kaspersky {
+            background-color: var(--kaspersky-green);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 3px;
+            transition: 0.3s;
+            letter-spacing: 1px;
+        }
+
+        .btn-kaspersky:hover {
+            background-color: #008f7a;
+            color: white;
+            box-shadow: 0 0 25px rgba(0, 168, 142, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* --- Serviços Bauru HD --- */
+        .bauru-services {
+            background-color: #0e121b;
+            padding: 80px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .bhd-card {
+            background: #181e2b;
+            padding: 35px 25px;
+            border-radius: 6px;
+            border-top: 4px solid var(--bauru-blue);
+            height: 100%;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bhd-card:hover {
+            transform: translateY(-10px);
+            background: #202636;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .bhd-icon {
+            color: var(--bauru-blue);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .btn-outline-bauru {
+            border: 1px solid var(--bauru-blue);
+            color: var(--bauru-blue);
+            margin-top: auto;
+            font-weight: 600;
+        }
+        .btn-outline-bauru:hover {
+            background-color: var(--bauru-blue);
+            color: white;
+        }
+
+        /* --- Soluções Kaspersky --- */
+        .section-title {
             text-align: center;
-            font-size: 30px;
-            box-shadow: 2px 2px 3px #999;
-            z-index: 100;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 80px; height: 4px;
+            background-color: var(--kaspersky-green);
+            position: absolute;
+            bottom: -15px; left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .kaspersky-card {
+            background-color: var(--card-bg);
+            border: 1px solid #333;
+            padding: 30px;
+            height: 100%;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kaspersky-card:hover {
+            border-color: var(--kaspersky-green);
+            box-shadow: 0 0 20px rgba(0, 168, 142, 0.15);
+        }
+
+        .k-icon {
+            color: var(--kaspersky-green);
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .service-list li { margin-bottom: 10px; color: #bbb; font-size: 0.95rem; }
+        .service-list li i { color: var(--kaspersky-green); margin-right: 10px; }
+
+        /* --- Modais --- */
+        .modal-content {
+            background-color: #151a27;
+            color: #fff;
+            border: 1px solid var(--kaspersky-green);
+        }
+        .modal-header { border-bottom: 1px solid #333; background: #0f131c; }
+        .modal-footer { border-top: 1px solid #333; background: #0f131c; }
+        .close-modal { color: white; background: none; border: none; font-size: 2rem; }
+        
+        .modal-body img {
+            border-radius: 5px;
+            border: 1px solid #444;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+        
+        .feature-list li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+        }
+        .feature-list i {
+            color: var(--kaspersky-green);
+            margin-top: 5px;
+            margin-right: 10px;
+        }
+
+        /* --- Formulário de Contato (Correções de Layout) --- */
+        .contact-section {
+            background: linear-gradient(180deg, #0b0f19 0%, #151a27 100%);
+            /* Aumentado o padding-bottom para 100px para evitar que o box corte */
+            padding: 80px 0 120px 0;
+            border-top: 1px solid #333;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-control {
+            background-color: #0b0f19;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 12px;
+        }
+
+        .form-control:focus {
+            background-color: #0b0f19;
+            color: #fff;
+            border-color: var(--kaspersky-green);
+            box-shadow: 0 0 0 0.2rem rgba(0, 168, 142, 0.25);
+        }
+
+        /* Box de Informações e Mapa */
+        .contact-info-box {
+            background: #1a2233;
+            padding: 30px;
+            border-radius: 8px;
+            height: 100%;
+            border: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .map-container {
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--kaspersky-green);
+            flex-grow: 1;
+            min-height: 250px;
+        }
+
+        /* --- Footer Robusto --- */
+        footer {
+            background-color: #05070a;
+            padding-top: 70px;
+            border-top: 3px solid var(--kaspersky-green);
+            color: #d1d1d1;
+            position: relative;
+            z-index: 2; /* Garante que o footer fique sobreposto corretamente se necessário */
+        }
+
+        .footer-title {
+            color: white;
+            font-weight: 700;
+            margin-bottom: 25px;
+            border-left: 3px solid var(--kaspersky-green);
+            padding-left: 15px;
+        }
+
+        .footer-links a {
+            color: #d1d1d1;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 12px;
+            transition: 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--kaspersky-green);
+            padding-left: 5px;
+        }
+
+        .footer-contact-item {
             display: flex;
             align-items: center;
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+            color: #fff;
+        }
+
+        .footer-contact-item i {
+            color: var(--kaspersky-green);
+            font-size: 1.2rem;
+            margin-right: 15px;
+            width: 25px;
+            text-align: center;
+        }
+
+        .copyright {
+            background-color: #000;
+            padding: 20px 0;
+            margin-top: 50px;
+            font-size: 0.9rem;
+            border-top: 1px solid #222;
+            color: #fff;
+        }
+
+        /* WhatsApp Flutuante Centralizado */
+        .float-wa {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            width: 65px; height: 65px;
+            background-color: #25d366; color: #FFF;
+            border-radius: 50%;
+            display: flex;
             justify-content: center;
+            align-items: center;
+            font-size: 35px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.6);
+            z-index: 1000;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+        .float-wa:hover { transform: scale(1.1); background-color: #1ebc57; color: white; }
+
+        /* Stats */
+        .stats-section {
+            background: linear-gradient(45deg, #0f141f, #1a2233);
+            padding: 80px 0;
+            border-top: 1px solid #333;
+        }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--kaspersky-green);
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .navbar-brand { font-size: 1.3rem; }
+            .bhd-card { margin-bottom: 20px; }
+            .contact-section { padding-bottom: 60px; }
         }
     </style>
 </head>
-<body class="bg-gray-50">
-    <!-- Skip to main content link for screen readers -->
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded z-50">
-        Pular para o conteúdo principal
-    </a>
+<body>
 
-    <!-- Navigation -->
-    <nav class="bg-white shadow-lg sticky top-0 z-40" role="navigation" aria-label="Navegação principal">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex items-center">
-                    <a href="#home" class="flex items-center">
-                        <!-- Novo Logo -->
-                        <img class="h-8 w-auto mr-3" src="https://api.iconify.design/material-symbols/security.svg?color=%232563eb" alt="Logo de Escudo de Segurança">
-                        <h1 class="text-2xl font-bold text-gray-900">BauruHelpDesk</h1>
-                    </a>
-                </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="#home" class="text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium focus-visible">Início</a>
-                        <a href="#services" class="text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium focus-visible">Serviços</a>
-                        <a href="#about" class="text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium focus-visible">Sobre</a>
-                        <a href="#contact" class="text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium focus-visible">Contato</a>
-                    </div>
-                </div>
-                <button id="mobile-menu-button" class="md:hidden text-gray-900 hover:text-blue-600 focus-visible" aria-label="Abrir menu mobile" aria-expanded="false">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-shield-halved me-2"></i>BAURU<span>HELPDESK</span>
+            </a>
+            <div class="d-flex align-items-center">
+                <span class="partner-badge d-none d-md-inline-block"><i class="fas fa-certificate me-1"></i> KASPERSKY PARTNER GROUP</span>
             </div>
-        </div>
-        
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#home" class="block text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium focus-visible">Início</a>
-                <a href="#services" class="block text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium focus-visible">Serviços</a>
-                <a href="#about" class="block text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium focus-visible">Sobre</a>
-                <a href="#contact" class="block text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium focus-visible">Contato</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link active" href="#home">Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#servicos-bauru">Nossos Serviços</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#solucoes-kaspersky">Soluções Kaspersky</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contato-email">Fale Conosco</a></li>
+                </ul>
             </div>
         </div>
     </nav>
 
-    <main id="main-content">
-        <!-- Hero Section -->
-        <section id="home" class="bg-blue-600 text-white py-20 relative flex items-center justify-center" role="banner" style="min-height: 450px;">
-            <div id="carousel-container" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-
-                <!-- Slide 1 -->
-                <div class="carousel-slide active">
-                    <div class="text-center">
-                        <h2 class="text-4xl md:text-6xl font-bold mb-6">
-                            Protegemos Seu Futuro Digital
-                        </h2>
-                        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-                            Consultoria especializada em TI e Segurança Cibernética com soluções inovadoras e acessíveis para empresas de todos os tamanhos.
-                        </p>
+    <!-- Hero Carousel -->
+    <div id="home" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#home" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#home" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#home" data-bs-slide-to="2"></button>
+            <button type="button" data-bs-target="#home" data-bs-slide-to="3"></button>
+        </div>
+        
+        <div class="carousel-inner">
+            <!-- Slide 1 -->
+            <div class="carousel-item active" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop');">
+                <div class="overlay">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <span class="badge bg-success mb-3 px-3 py-2">NOVA PARCERIA OFICIAL</span>
+                            <h1 class="hero-title">Bauru Help Desk é<br>Kaspersky Partner Group</h1>
+                            <p class="lead text-white">A excelência do nosso suporte técnico agora unida à segurança mais premiada do mundo. Proteção completa para o seu negócio.</p>
+                            <a href="#solucoes-kaspersky" class="btn btn-kaspersky me-3">Conheça as Soluções</a>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Slide 2 -->
-                <div class="carousel-slide">
-                    <div class="text-center">
-                        <h2 class="text-4xl md:text-6xl font-bold mb-6">
-                            Manutenção Preventiva e Corretiva dos Seus Ativos
-                        </h2>
-                        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-                           Especialistas em manutenção de Notebooks e Microcomputadores para sua empresa não parar.
-                        </p>
-                    </div>
-                </div>
-                 
-                 <!-- Common Buttons -->
-                <div class="text-center mt-8 space-x-4">
-                    <button class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors cyber-glow focus-visible" onclick="scrollToSection('contact')">
-                        Solicitar Consultoria
-                    </button>
-                    <button class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors focus-visible" onclick="scrollToSection('services')">
-                        Nossos Serviços
-                    </button>
-                </div>
-
             </div>
-        </section>
 
-        <!-- Services Section -->
-        <section id="services" class="py-20 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16 fade-in">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Nossos Serviços</h2>
-                    <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                        Oferecemos soluções completas em tecnologia e segurança digital
-                    </p>
+            <!-- Slide 2 -->
+            <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=2070&auto=format&fit=crop');">
+                <div class="overlay">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h2 class="hero-title">Kaspersky Endpoint<br>Security Cloud</h2>
+                            <p class="lead text-white">A forma mais fácil de proteger seu negócio. Gerencie Windows, macOS, iOS e Android em um console na nuvem.</p>
+                            <button class="btn btn-kaspersky" data-bs-toggle="modal" data-bs-target="#modalEndpoint">Ver Detalhes Técnicos</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop');">
+                <div class="overlay">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h2 class="hero-title">Proteja seu AWS<br>e Azure</h2>
+                            <p class="lead text-white">Kaspersky Hybrid Cloud Security: Visibilidade total para cargas de trabalho na nuvem (Workloads) e servidores físicos.</p>
+                            <button class="btn btn-kaspersky" data-bs-toggle="modal" data-bs-target="#modalHybrid">Ver Proteção Cloud</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=2069&auto=format&fit=crop');">
+                <div class="overlay">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h2 class="hero-title">Blindagem para<br>Office 365</h2>
+                            <p class="lead text-white">Bloqueie Phishing, Ransomware e comprometimento de e-mails (BEC) no Exchange, OneDrive e Teams.</p>
+                            <button class="btn btn-kaspersky" data-bs-toggle="modal" data-bs-target="#modalOffice">Ver Segurança O365</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seção Serviços Bauru Help Desk -->
+    <section id="servicos-bauru" class="bauru-services">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-6 fw-bold text-white">Serviços Bauru Help Desk</h2>
+                    <p class="text-white fs-5">Infraestrutura e Suporte Técnico Especializado</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <!-- Serviço 1 -->
+                <div class="col-md-4">
+                    <div class="bhd-card">
+                        <i class="fas fa-headset bhd-icon"></i>
+                        <h3>Suporte Técnico</h3>
+                        <p class="text-secondary">Atendimento rápido remoto ou presencial. Formatação, limpeza de vírus, otimização de computadores e resolução de problemas diários de TI.</p>
+                        <a href="https://wa.me/5514981075957?text=Olá, preciso de suporte técnico para minha empresa" class="btn btn-outline-bauru w-100 mt-auto">
+                            <i class="fab fa-whatsapp"></i> Falar com Consultor
+                        </a>
+                    </div>
+                </div>
+                <!-- Serviço 2 -->
+                <div class="col-md-4">
+                    <div class="bhd-card">
+                        <i class="fas fa-network-wired bhd-icon"></i>
+                        <h3>Redes e Wi-Fi</h3>
+                        <p class="text-secondary">Projeto de cabeamento estruturado, organização de Racks, configuração de roteadores e Wi-Fi corporativo de alta performance.</p>
+                        <a href="https://wa.me/5514981075957?text=Gostaria de um orçamento para redes e wifi" class="btn btn-outline-bauru w-100 mt-auto">
+                            <i class="fab fa-whatsapp"></i> Falar com Consultor
+                        </a>
+                    </div>
+                </div>
+                <!-- Serviço 3 -->
+                <div class="col-md-4">
+                    <div class="bhd-card">
+                        <i class="fas fa-server bhd-icon"></i>
+                        <h3>Servidores e Backup</h3>
+                        <p class="text-secondary">Instalação e gestão de servidores Windows/Linux. Implementação de rotinas de Backup seguro para garantir seus dados.</p>
+                        <a href="https://wa.me/5514981075957?text=Preciso de ajuda com servidores e backup" class="btn btn-outline-bauru w-100 mt-auto">
+                            <i class="fab fa-whatsapp"></i> Falar com Consultor
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Soluções Kaspersky -->
+    <section id="solucoes-kaspersky" class="py-5">
+        <div class="container">
+            <h2 class="section-title display-5 fw-bold">Soluções Kaspersky Partner</h2>
+            <p class="text-center mb-5 text-white w-75 mx-auto fs-5">Como parceiros certificados, implementamos as tecnologias de segurança mais avançadas do mercado, adaptadas para sua necessidade.</p>
+            
+            <div class="row g-4">
+                <!-- Card 1 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="kaspersky-card">
+                        <i class="fas fa-cloud-shield k-icon"></i>
+                        <h4>Endpoint Security Cloud</h4>
+                        <p class="small text-secondary">A proteção essencial para PMEs. Segurança fácil de gerenciar na nuvem.</p>
+                        <ul class="service-list">
+                            <li><i class="fas fa-check"></i> Console Unificado</li>
+                            <li><i class="fas fa-check"></i> Sem servidor local</li>
+                            <li><i class="fas fa-check"></i> Anti-Ransomware</li>
+                        </ul>
+                        <button class="btn btn-outline-light btn-sm w-100 mt-auto" data-bs-toggle="modal" data-bs-target="#modalEndpoint">Ver Detalhes Completos</button>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="kaspersky-card">
+                        <i class="fas fa-server k-icon"></i>
+                        <h4>Hybrid Cloud Security</h4>
+                        <p class="small text-secondary">Segurança DevOps para servidores físicos, virtuais e nuvem (AWS/Azure).</p>
+                        <ul class="service-list">
+                            <li><i class="fas fa-check"></i> Proteção de Workloads</li>
+                            <li><i class="fas fa-check"></i> Integração API</li>
+                            <li><i class="fas fa-check"></i> Prevenção de Exploits</li>
+                        </ul>
+                        <button class="btn btn-outline-light btn-sm w-100 mt-auto" data-bs-toggle="modal" data-bs-target="#modalHybrid">Ver Detalhes Completos</button>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="kaspersky-card">
+                        <i class="fab fa-microsoft k-icon"></i>
+                        <h4>Office 365 Security</h4>
+                        <p class="small text-secondary">Proteja e-mails e colaboração onde a proteção nativa falha.</p>
+                        <ul class="service-list">
+                            <li><i class="fas fa-check"></i> Anti-Phishing Avançado</li>
+                            <li><i class="fas fa-check"></i> Proteção Teams/OneDrive</li>
+                            <li><i class="fas fa-check"></i> Anti-BEC (Fraudes)</li>
+                        </ul>
+                        <button class="btn btn-outline-light btn-sm w-100 mt-auto" data-bs-toggle="modal" data-bs-target="#modalOffice">Ver Detalhes Completos</button>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="kaspersky-card">
+                        <i class="fas fa-brain k-icon"></i>
+                        <h4>Next-Gen Technology</h4>
+                        <p class="small text-secondary">Inteligência Artificial e Machine Learning aplicados à defesa.</p>
+                        <ul class="service-list">
+                            <li><i class="fas fa-check"></i> Análise Comportamental</li>
+                            <li><i class="fas fa-check"></i> Proteção de Memória</li>
+                            <li><i class="fas fa-check"></i> Líder em Testes</li>
+                        </ul>
+                        <button class="btn btn-outline-light btn-sm w-100 mt-auto" data-bs-toggle="modal" data-bs-target="#modalNextGen">Ver Detalhes Completos</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Estatísticas -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5">
+                    <h2 class="mb-4 text-white">Sua empresa está segura?</h2>
+                    <p class="text-white fs-5">Não espere um incidente parar seu negócio. A Bauru Help Desk implementa a segurança necessária rapidamente.</p>
+                    <p class="text-secondary mt-3">Os dados mostram que pequenas empresas são alvos frequentes por terem menos proteção.</p>
+                </div>
+                <div class="col-lg-7">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="p-4 border border-secondary rounded bg-dark text-center h-100">
+                                <div class="stat-number">67%</div>
+                                <div class="text-light">das pequenas empresas sofreram um ataque cibernético no último ano.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-4 border border-secondary rounded bg-dark text-center h-100">
+                                <div class="stat-number">58%</div>
+                                <div class="text-light">das vítimas sofreram violação e vazamento massivo de dados.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-4 border border-secondary rounded bg-dark text-center h-100">
+                                <div class="stat-number">22%</div>
+                                <div class="text-light">apenas conseguiram recuperar seus dados após o ataque (backup).</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-4 border border-secondary rounded bg-dark text-center h-100">
+                                <div class="stat-number">92%</div>
+                                <div class="text-light">de todo malware é entregue diretamente via e-mail (Phishing).</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Contato / Formulário -->
+    <section id="contato-email" class="contact-section">
+        <div class="container">
+            <div class="row align-items-stretch">
+                <!-- Coluna Esquerda: Dados e Mapa -->
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <div class="contact-info-box">
+                        <div>
+                            <h2 class="fw-bold text-white mb-3">Solicite um Orçamento</h2>
+                            <p class="text-white mb-4">Preencha o formulário ou entre em contato direto. Nossa equipe retornará em breve.</p>
+                            
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-envelope fa-lg text-success me-3"></i>
+                                <div>
+                                    <h5 class="mb-0 text-white fs-6">E-mail</h5>
+                                    <a href="mailto:bauruhelpdesk@gmail.com" class="text-decoration-none text-light small">bauruhelpdesk@gmail.com</a>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fab fa-whatsapp fa-lg text-success me-3"></i>
+                                <div>
+                                    <h5 class="mb-0 text-white fs-6">WhatsApp</h5>
+                                    <a href="https://wa.me/5514981075957" class="text-decoration-none text-light small">(14) 98107-5957</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- MAPA BAURU ATUALIZADO -->
+                        <div class="map-container">
+                              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3690.868646806165!2d-49.0746713!3d-22.2907669!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94bf69c6f9f88011%3A0xb299a762efc0e288!2sBauru%20HelpDesk!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr" width="100%" height="100%" style="border:0; min-height: 250px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-shadow fade-in" tabindex="0">
-                        <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
-                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Segurança Cibernética</h3>
-                        <p class="text-gray-600">Proteção avançada contra ameaças digitais, auditoria de segurança e implementação de políticas de proteção de dados.</p>
-                    </div>
-                    
-                    <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-shadow fade-in" tabindex="0">
-                        <div class="w-16 h-16 bg-green-100 rounded-lg flex items-center justify-center mb-6">
-                            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Consultoria em TI</h3>
-                        <p class="text-gray-600">Estratégias tecnológicas personalizadas, otimização de infraestrutura e transformação digital para sua empresa.</p>
-                    </div>
-                    
-                    <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-shadow fade-in" tabindex="0">
-                        <div class="w-16 h-16 bg-purple-100 rounded-lg flex items-center justify-center mb-6">
-                            <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Manutenção de Notebooks e Microcomputadores</h3>
-                        <p class="text-gray-600">Realizamos manutenção preventiva e corretiva do seu Notebook e Microcomputadores, para sua empresa não parar.</p>
-                    </div>
-                    
-                    <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-shadow fade-in" tabindex="0">
-                        <div class="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center mb-6">
-                            <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Resposta a Incidentes</h3>
-                        <p class="text-gray-600">Suporte dedicado para resposta rápida a incidentes de segurança e recuperação de sistemas comprometidos.</p>
-                    </div>
-                    
-                    <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-shadow fade-in" tabindex="0">
-                        <div class="w-16 h-16 bg-yellow-100 rounded-lg flex items-center justify-center mb-6">
-                            <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Treinamento</h3>
-                        <p class="text-gray-600">Capacitação de equipes em segurança digital, conscientização sobre ameaças e melhores práticas em TI.</p>
-                    </div>
-                    
-                    <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-shadow fade-in" tabindex="0">
-                        <div class="w-16 h-16 bg-indigo-100 rounded-lg flex items-center justify-center mb-6">
-                            <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 00-2 2z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Implementação de Firewall</h3>
-                        <p class="text-gray-600">Implementação de Firewall e políticas de acesso, para garantir que somente serviços autorizados sejam permitidos.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+                <!-- Coluna Direita: Formulário -->
+                <div class="col-md-6">
+                    <form action="https://formsubmit.co/bauruhelpdesk@gmail.com" method="POST" class="p-4 rounded h-100 border border-secondary" style="background: #1a2233;">
+                        <input type="hidden" name="_subject" value="Novo Contato do Site Bauru Help Desk">
+                        <input type="hidden" name="_captcha" value="false">
+                        <!-- Redireciona de volta para o site após envio -->
+                        <input type="hidden" name="_next" value="https://bauruhelpdesk.com.br">
 
-        <!-- About Section -->
-        <section id="about" class="py-20 bg-gray-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid lg:grid-cols-2 gap-12 items-center">
-                    <div class="fade-in">
-                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                            Especialistas em Segurança Digital
-                        </h2>
-                        <p class="text-lg text-gray-600 mb-6">
-                            Com mais de 24 anos de experiência no mercado, nossa equipe é especializada em proteger empresas contra as mais avançadas ameaças cibernéticas.
-                        </p>
-                        <div class="space-y-4">
-                            <div class="flex items-center">
-                                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-4">
-                                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                    </svg>
-                                </div>
-                                <span class="text-gray-700">Certificações dos maiores fabricantes de equipamentos e software</span>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-4">
-                                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                    </svg>
-                                </div>
-                                <span class="text-gray-700">Políticas de segurança</span>
-                            </div>
+                        <div class="mb-3">
+                            <label class="form-label text-white">Seu Nome</label>
+                            <input type="text" class="form-control" name="nome" required placeholder="Digite seu nome">
                         </div>
-                    </div>
-                    <div class="fade-in">
-                        <div class="bg-white p-8 rounded-xl shadow-lg">
-                            <h3 class="text-2xl font-bold text-gray-900 mb-6">Nossos Números</h3>
-                            <div class="grid grid-cols-2 gap-6">
-                                <div class="text-center">
-                                    <div class="text-3xl font-bold text-blue-600 mb-2">500+</div>
-                                    <div class="text-gray-600">Empresas Protegidas</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="text-3xl font-bold text-green-600 mb-2">99.9%</div>
-                                    <div class="text-gray-600">Uptime Garantido</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="text-3xl font-bold text-purple-600 mb-2">24+</div>
-                                    <div class="text-gray-600">Anos de Experiência</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="text-3xl font-bold text-red-600 mb-2">0</div>
-                                    <div class="text-gray-600">Vazamentos de Dados</div>
-                                </div>
-                            </div>
+                        <div class="mb-3">
+                            <label class="form-label text-white">Empresa</label>
+                            <input type="text" class="form-control" name="empresa" placeholder="Nome da empresa">
                         </div>
-                    </div>
+                        <div class="mb-3">
+                            <label class="form-label text-white">Telefone / WhatsApp</label>
+                            <input type="tel" class="form-control" name="telefone" required placeholder="(14) 9XXXX-XXXX">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-white">Interesse</label>
+                            <select class="form-control" name="interesse">
+                                <option>Cotação Kaspersky</option>
+                                <option>Suporte Técnico TI</option>
+                                <option>Infraestrutura de Redes</option>
+                                <option>Outros</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-white">Mensagem</label>
+                            <textarea class="form-control" name="mensagem" rows="3" placeholder="Como podemos ajudar?"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-kaspersky w-100">ENVIAR SOLICITAÇÃO</button>
+                    </form>
                 </div>
             </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="py-20 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16 fade-in">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Entre em Contato</h2>
-                    <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                        Pronto para proteger seu negócio? Fale conosco hoje mesmo.
-                    </p>
-                </div>
-                
-                <div class="grid lg:grid-cols-2 gap-12">
-                    <div class="fade-in">
-                        <form id="contact-form" action="https://api.web3forms.com/submit" method="POST" class="space-y-6">
-                            
-                            <input type="hidden" name="access_key" value="37c726c6-7cb0-49c2-9353-13f1a3c4b15f">
-                            
-                            <div>
-                                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nome Completo *</label>
-                                <input type="text" id="name" name="Nome" required 
-                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent focus-visible">
-                            </div>
-                            
-                            <div>
-                                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">E-mail *</label>
-                                <input type="email" id="email" name="Email" required 
-                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent focus-visible">
-                            </div>
-                            
-                            <div>
-                                <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Telefone / WhatsApp *</label>
-                                <input type="tel" id="phone" name="Telefone" required
-                                       placeholder="(XX) XXXXX-XXXX"
-                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent focus-visible">
-                            </div>
-                            
-                            <div>
-                                <label for="company" class="block text-sm font-medium text-gray-700 mb-2">Empresa</label>
-                                <input type="text" id="company" name="Empresa" 
-                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent focus-visible">
-                            </div>
-                            
-                            <div>
-                                <label for="service" class="block text-sm font-medium text-gray-700 mb-2">Serviço de Interesse</label>
-                                <select id="service" name="Serviço" 
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent focus-visible">
-                                    <option value="">Selecione um serviço</option>
-                                    <option value="cybersecurity">Segurança Cibernética</option>
-                                    <option value="it-consulting">Consultoria em TI</option>
-                                    <option value="incident-response">Resposta a Incidentes</option>
-                                    <option value="training">Treinamento</option>
-                                    <option value="manutencao-notebooks">Manutenção de notebooks e microcomputadores</option>
-                                    <option value="visita-tecnica">Visita Técnica</option>
-                                </select>
-                            </div>
-                            
-                            <div>
-                                <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Mensagem *</label>
-                                <textarea id="message" name="Mensagem" rows="5" required 
-                                          placeholder="Digite sua mensagem..."
-                                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent focus-visible"></textarea>
-                            </div>
-                             
-                            <div id="form-result" class="mt-4"></div>
-                            
-                            <button type="submit" 
-                                    class="w-full bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors cyber-glow focus-visible">
-                                Enviar
-                            </button>
-                        </form>
-                    </div>
-                    
-                    <div class="fade-in">
-                        <div class="bg-gray-50 p-8 rounded-xl">
-                            <h3 class="text-2xl font-bold text-gray-900 mb-6">Informações de Contato</h3>
-                            
-                            <div class="space-y-6">
-                                <div class="flex items-start">
-                                    <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-4 mt-1 flex-shrink-0">
-                                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-semibold text-gray-900 mb-4">Endereço</h4>
-                                        <div class="w-full h-64 rounded-lg overflow-hidden shadow-md">
-                                            <iframe 
-                                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.042858593414!2d-49.03473442470557!3d-22.314271379673997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94bf670e55541639%3A0x633a61c572096753!2sR.%20Mal.%20Jo%C3%A3o%20Baptista%20Mascarenhas%20de%20Moraes%2C%201-39%20-%20N%C3%BAcleo%20Res.%20Pres.%20Geisel%2C%20Bauru%20-%20SP%2C%2017033-250!5e0!3m2!1spt-BR!2sbr!4v1715802611796!5m2!1spt-BR!2sbr"
-                                                width="100%" 
-                                                height="100%" 
-                                                style="border:0;" 
-                                                allowfullscreen="" 
-                                                loading="lazy" 
-                                                referrerpolicy="no-referrer-when-downgrade">
-                                            </iframe>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-start">
-                                    <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mr-4 mt-1 flex-shrink-0">
-                                        <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-semibold text-gray-900">Telefone</h4>
-                                        <p class="text-gray-600">(14) 98107-5957</p>
-                                        <a href="https://api.whatsapp.com/send?phone=5514981075957" target="_blank"
-                                           class="inline-flex items-center mt-2 px-3 py-1 bg-green-500 text-white text-sm font-semibold rounded-lg hover:bg-green-600 transition-colors focus-visible">
-                                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                                                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.371-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01s-.521.074-.792.372c-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-                                            </svg>
-                                            Chamar no WhatsApp
-                                        </a>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-start">
-                                    <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center mr-4 mt-1 flex-shrink-0">
-                                        <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-semibold text-gray-900">E-mail</h4>
-                                        <a href="mailto:bauruhelpdesk@gmail.com" class="text-gray-600 hover:text-blue-600">bauruhelpdesk@gmail.com</a>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-start">
-                                    <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center mr-4 mt-1 flex-shrink-0">
-                                        <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-semibold text-gray-900">Horário de Atendimento</h4>
-                                        <p class="text-gray-600">Seg a Sex 08h às 18hs</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12" role="contentinfo">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-3 gap-8">
-                <div>
-                    <h3 class="text-xl font-bold mb-4">BauruHelpDesk</h3>
-                    <p class="text-gray-400">Protegendo seu futuro digital com soluções inovadoras e acessíveis.</p>
+    <footer id="rodape">
+        <div class="container">
+            <div class="row">
+                <!-- Coluna 1 -->
+                <div class="col-lg-4 col-md-6 mb-5">
+                    <h4 class="footer-title">BAURU<span style="color:var(--kaspersky-green)">HELPDESK</span></h4>
+                    <p class="mt-3 text-white" style="line-height: 1.6;">
+                        Referência em Bauru e região em soluções de Tecnologia da Informação. 
+                        Como parceiros oficiais <strong>Kaspersky Partner Group</strong>, entregamos o que há de mais moderno 
+                        em segurança cibernética, aliado ao nosso suporte técnico ágil e humanizado.
+                    </p>
                 </div>
-                <div>
-                    <h4 class="font-semibold mb-4">Serviços</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#services" class="hover:text-white focus-visible">Segurança Cibernética</a></li>
-                        <li><a href="#services" class="hover:text-white focus-visible">Consultoria em TI</a></li>
-                        <li><a href="#services" class="hover:text-white focus-visible">Manutenção de Equipamentos</a></li>
-                        <li><a href="#services" class="hover:text-white focus-visible">Treinamento</a></li>
-                    </ul>
+
+                <!-- Coluna 2 -->
+                <div class="col-lg-2 col-md-6 mb-5 footer-links">
+                    <h5 class="text-white mb-4 fw-bold">Soluções</h5>
+                    <a href="#modalEndpoint" data-bs-toggle="modal">Endpoint Cloud</a>
+                    <a href="#modalHybrid" data-bs-toggle="modal">Hybrid Cloud</a>
+                    <a href="#modalOffice" data-bs-toggle="modal">Office 365 Security</a>
+                    <a href="#servicos-bauru">Redes e Infra</a>
+                    <a href="#servicos-bauru">Suporte TI</a>
                 </div>
-                <div>
-                    <h4 class="font-semibold mb-4">Empresa</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#about" class="hover:text-white focus-visible">Sobre Nós</a></li>
-                        <li><a href="#contact" class="hover:text-white focus-visible">Contato</a></li>
-                    </ul>
+
+                <!-- Coluna 3 -->
+                <div class="col-lg-3 col-md-6 mb-5">
+                    <h5 class="text-white mb-4 fw-bold">Fale Conosco</h5>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>(14) 98107-5957</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>(14) 98107-5957</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>bauruhelpdesk@gmail.com</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Bauru, SP</span>
+                    </div>
+                </div>
+
+                <!-- Coluna 4 -->
+                <div class="col-lg-3 col-md-6 mb-5 text-center text-lg-start">
+                    <h5 class="text-white mb-4 fw-bold">Certificação</h5>
+                    <div class="p-3 border border-secondary rounded bg-dark d-inline-block">
+                        <h6 class="text-success fw-bold mb-1">KASPERSKY</h6>
+                        <p class="text-white small mb-0">PARTNER GROUP</p>
+                        <hr class="my-2 bg-secondary">
+                        <small class="text-light">Authorized Reseller</small>
+                    </div>
+                    <p class="text-white small mt-3">Nossos técnicos são certificados para garantir a melhor implementação.</p>
                 </div>
             </div>
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2024 BauruHelpDesk. Todos os direitos reservados.</p>
+        </div>
+
+        <div class="copyright text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-md-start text-white">
+                        &copy; 2025 Bauru Help Desk. Todos os direitos reservados.
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <span class="text-white small">Marcas registradas Kaspersky Lab pertencem aos respectivos titulares.</span>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
-    
-    <!-- WhatsApp Floating Icon -->
-    <a href="https://api.whatsapp.com/send?phone=5514981075957" class="whatsapp-float" target="_blank" aria-label="Fale conosco pelo WhatsApp">
-        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.371-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01s-.521.074-.792.372c-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-        </svg>
+
+    <!-- WhatsApp Flutuante Centralizado -->
+    <a href="https://wa.me/5514981075957?text=Olá, gostaria de falar sobre TI e Segurança." class="float-wa" target="_blank" title="Falar no WhatsApp">
+        <i class="fab fa-whatsapp"></i>
     </a>
 
-    <script>
-        // Smooth scrolling for navigation - CORRIGIDO (movido para o escopo global)
-        function scrollToSection(sectionId) {
-            const element = document.getElementById(sectionId);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
+    <!-- --- MODAIS COM IMAGENS --- -->
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // Mobile menu toggle
-            document.getElementById('mobile-menu-button').addEventListener('click', function() {
-                const menu = document.getElementById('mobile-menu');
-                const isExpanded = this.getAttribute('aria-expanded') === 'true';
-                
-                menu.classList.toggle('hidden');
-                this.setAttribute('aria-expanded', !isExpanded);
-            });
+    <!-- Modal Endpoint Cloud -->
+    <div class="modal fade" id="modalEndpoint" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><i class="fas fa-cloud-shield text-success me-2"></i>Kaspersky Endpoint Security Cloud</h4>
+                    <button type="button" class="close-modal" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop" alt="Endpoint Dashboard" class="img-fluid">
+                            <div class="alert alert-dark border-success mt-3">
+                                <h6 class="text-success fw-bold">Por que escolher?</h6>
+                                <p class="small mb-0">Proteção mais testada e premiada do mundo para PMEs. Esqueça servidores complexos: tudo é gerido via Web.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <h5 class="text-white border-bottom border-secondary pb-2 mb-3">Funcionalidades Principais</h5>
+                            <ul class="feature-list list-unstyled text-light">
+                                <li><i class="fas fa-check-circle"></i> <strong>Console 100% na Nuvem:</strong> Gerencie a segurança de qualquer lugar. Basta um navegador.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>Proteção Completa:</strong> Cobre Windows (Desktop/Server), macOS, iOS e Android.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>Anti-Ransomware com Rollback:</strong> Se um vírus criptografar arquivos, o sistema detecta e reverte as alterações automaticamente.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>Gerenciamento Móvel (MDM):</strong> Proteja e gerencie smartphones e tablets (2 grátis por licença).</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>Controle Web:</strong> Bloqueie acesso a sites perigosos ou não produtivos.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <span class="text-muted small">* Licenciamento flexível mensal ou anual.</span>
+                    <a href="https://wa.me/5514981075957?text=Quero cotação do Endpoint Cloud" class="btn btn-kaspersky"><i class="fab fa-whatsapp me-2"></i> Solicitar Cotação</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            // Add click handlers for navigation links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href').substring(1);
-                    scrollToSection(targetId);
-                    
-                    const mobileMenu = document.getElementById('mobile-menu');
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.classList.add('hidden');
-                        document.getElementById('mobile-menu-button').setAttribute('aria-expanded', 'false');
-                    }
-                });
-            });
+    <!-- Modal Hybrid Cloud -->
+    <div class="modal fade" id="modalHybrid" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><i class="fas fa-server text-success me-2"></i>Kaspersky Hybrid Cloud Security</h4>
+                    <button type="button" class="close-modal" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <img src="https://canalti.pe/wp-content/uploads/2020/11/Kaspersky-Hybrid-Cloud-Security-16167752.jpg" alt="Server Security" class="img-fluid">
+                            <div class="alert alert-dark border-success mt-3">
+                                <h6 class="text-success fw-bold">Desafio da Nuvem</h6>
+                                <p class="small mb-0">A segurança da nuvem (AWS/Azure) é responsabilidade compartilhada. Proteja seus dados e apps.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <h5 class="text-white border-bottom border-secondary pb-2 mb-3">Proteção de Cargas de Trabalho (Workloads)</h5>
+                            <ul class="feature-list list-unstyled text-light">
+                                <li><i class="fas fa-check-circle"></i> <strong>Visibilidade Total:</strong> Integração via API com AWS e Azure para descobrir instâncias automaticamente.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>Segurança Híbrida:</strong> Uma única solução protege servidores físicos locais (On-Premise), Virtualizados e Nuvem Pública.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>Proteção DevOps:</strong> Segurança para contêineres e verificação de imagens.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>Prevenção de Exploits:</strong> Bloqueia ataques que tentam explorar falhas de sistema.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <a href="https://wa.me/5514981075957?text=Interesse em Hybrid Cloud" class="btn btn-kaspersky"><i class="fab fa-whatsapp me-2"></i> Falar com Especialista</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            // Fade in animation on scroll
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
+    <!-- Modal Office 365 -->
+    <div class="modal fade" id="modalOffice" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><i class="fab fa-microsoft text-success me-2"></i>Security for Microsoft Office 365</h4>
+                    <button type="button" class="close-modal" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <img src="https://www.watsoft.com/wp-content/uploads/elementor/thumbs/PP-KASPERSKY-365-r5gd4g5j7v7vs8ehpua493a9k0hhqw2vpfafezuj40.jpg" alt="Office 365 Security" class="img-fluid">
+                            <div class="alert alert-dark border-success mt-3">
+                                <h6 class="text-success fw-bold">Sabia que?</h6>
+                                <p class="small mb-0">92% dos malwares entram por e-mail. A proteção padrão da Microsoft detém o básico, mas falha em ataques direcionados.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <h5 class="text-white border-bottom border-secondary pb-2 mb-3">Camada Extra de Segurança</h5>
+                            <ul class="feature-list list-unstyled text-light">
+                                <li><i class="fas fa-check-circle"></i> <strong>20% Mais Eficiente:</strong> Testes comprovam superioridade sobre a proteção nativa da Microsoft.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>Anti-Phishing e BEC:</strong> Inteligência artificial para detectar e-mails falsos e fraudes financeiras.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>Cobertura Total:</strong> Protege Exchange Online, OneDrive, SharePoint Online e Microsoft Teams.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>Data Loss Prevention (DLP):</strong> Ajuda a prevenir vazamento de dados sensíveis.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <a href="https://wa.me/5514981075957?text=Quero proteger meu Office 365" class="btn btn-kaspersky"><i class="fab fa-whatsapp me-2"></i> Solicitar Demonstração</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            document.querySelectorAll('.fade-in').forEach(el => {
-                observer.observe(el);
-            });
-            
-            // Carousel Logic
-            let currentSlide = 0;
-            const slides = document.querySelectorAll('.carousel-slide');
-            const slideCount = slides.length;
+    <!-- Modal Next Gen -->
+    <div class="modal fade" id="modalNextGen" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><i class="fas fa-brain text-success me-2"></i>Tecnologia Next-Generation</h4>
+                    <button type="button" class="close-modal" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop" alt="AI Security" class="img-fluid">
+                        </div>
+                        <div class="col-lg-7">
+                            <h5 class="text-white border-bottom border-secondary pb-2 mb-3">Muito além do Antivírus tradicional</h5>
+                            <ul class="feature-list list-unstyled text-light mt-3">
+                                <li><i class="fas fa-check-circle"></i> <strong>Machine Learning e IA:</strong> Identifica padrões maliciosos nunca vistos antes.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>Análise Comportamental:</strong> Bloqueia programas agindo de forma suspeita.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>Prevenção de Exploits:</strong> Bloqueia invasões por falhas de software.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <a href="https://wa.me/5514981075957?text=Dúvidas sobre tecnologia Next Gen" class="btn btn-kaspersky"><i class="fab fa-whatsapp me-2"></i> Falar com Técnico</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            function showSlide(index) {
-                slides.forEach((slide) => {
-                    slide.classList.remove('active');
-                });
-                slides[index].classList.add('active');
-            }
-
-            function nextSlide() {
-                currentSlide = (currentSlide + 1) % slideCount;
-                showSlide(currentSlide);
-            }
-
-            if (slides.length > 1) {
-                setInterval(nextSlide, 5000);
-            }
-
-            // Keyboard navigation support for closing menus
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    const mobileMenu = document.getElementById('mobile-menu');
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.classList.add('hidden');
-                        document.getElementById('mobile-menu-button').setAttribute('aria-expanded', 'false');
-                    }
-                }
-            });
-            
-            // Handle Conditional Form Logic
-            const serviceSelect = document.getElementById('service');
-            const messageTextarea = document.getElementById('message');
-            const maintenancePlaceholder = `Por favor, forneça os seguintes detalhes:\n\n- Tipo de equipamento (Notebook ou Microcomputador):\n- Marca:\n- Número de série (se disponível):\n- Defeito apresentado:`;
-            const defaultPlaceholder = "Digite sua mensagem...";
-
-            serviceSelect.addEventListener('change', function(event) {
-                if (event.target.value === 'manutencao-notebooks') {
-                    messageTextarea.placeholder = maintenancePlaceholder;
-                } else {
-                    messageTextarea.placeholder = defaultPlaceholder;
-                }
-            });
-
-            // Handle Contact Form Submission via AJAX
-            const form = document.getElementById('contact-form');
-            const result = document.getElementById('form-result');
-
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const formData = new FormData(form);
-                const object = {};
-                formData.forEach((value, key) => {
-                    object[key] = value;
-                });
-                const json = JSON.stringify(object);
-                result.innerHTML = "Enviando, por favor aguarde...";
-                result.style.display = "block";
-
-                fetch('https://api.web3forms.com/submit', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        body: json
-                    })
-                    .then(async (response) => {
-                        let json = await response.json();
-                        if (response.status == 200) {
-                            result.innerHTML = `<span class="text-green-600 font-semibold">${json.message}</span>`;
-                        } else {
-                            console.log(response);
-                            result.innerHTML = `<span class="text-red-600 font-semibold">${json.message}</span>`;
-                        }
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        result.innerHTML = '<span class="text-red-600 font-semibold">Algo deu errado! Tente novamente mais tarde.</span>';
-                    })
-                    .then(function() {
-                        form.reset();
-                        messageTextarea.placeholder = defaultPlaceholder;
-                        setTimeout(() => {
-                            result.style.display = "none";
-                            result.innerHTML = "";
-                        }, 5000);
-                    });
-            });
-        });
-    </script>
+    <!-- Scripts JS Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
